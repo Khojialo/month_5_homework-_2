@@ -24,3 +24,13 @@ insert_lesson_themes("Python",[
     Theme(title = "Github")
 ])
 
+def show_all_lessons():
+    with Session(engine) as ss:
+        stmt = select(Lesson)
+        lessons = ss.scalars(stmt)
+        for lesson in lessons:
+            print(lesson)
+            for theme in lesson.themes:
+                print(f" Mavzu:{theme.title}")
+
+show_all_lessons()
