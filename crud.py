@@ -33,7 +33,9 @@ def show_all_lessons():
             for theme in lesson.themes:
                 print(f"Mavzu id:{theme.id} Mavzu nomi:{theme.title}")
 
-show_all_lessons()
+# show_all_lessons()
+
+
 
 
 def update_info_themes(theme_id:int,new_theme_title:str) -> Theme:
@@ -48,3 +50,13 @@ def update_info_themes(theme_id:int,new_theme_title:str) -> Theme:
 # update_info_themes(1,"Database.sql")
 
 
+def update_info_lesson(lesson_id,new_lesson_name:str) -> Lesson:
+    with Session(engine) as ss:
+        stmt = select(Lesson).where(Lesson.id==lesson_id)
+        lesson = ss.scalar(stmt)
+        lesson.name = new_lesson_name
+        ss.commit()
+        ss.refresh(lesson)
+        return lesson
+
+# update_info_lesson(1,"Pythonjon")
